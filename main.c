@@ -123,6 +123,7 @@ int minimax(depth, isMaximizing)
 
     if (isMaximizing == 1)
     {
+        //greater than any num
         int bestScore = INT_MIN;
         for (int i = 0; i < 3; i++)
         {
@@ -134,7 +135,11 @@ int minimax(depth, isMaximizing)
                     board[i][j] = -1;
                     int score = minimax(depth + 1, 0);
                     board[i][j] = 0;
-                    if (score > bestScore)
+                    if (depth == 0)
+                    {
+                        bestScore = score;
+                    }
+                    else if (score > bestScore)
                     {
                         bestScore = score;
                     }
@@ -157,7 +162,12 @@ int minimax(depth, isMaximizing)
                     board[i][j] = 1;
                     int score = minimax(depth + 1, 1);
                     board[i][j] = 0;
-                    if (score < bestScore)
+                    //deepest depth is 7
+                    if (depth == 7)
+                    {
+                        bestScore = score;
+                    }
+                    else if (score < bestScore)
                     {
                         bestScore = score;
                     }
@@ -182,7 +192,7 @@ int bestMove()
             if (board[i][j] == 0)
             {
                 board[i][j] = -1;
-                int score = minimax(0, 0);
+                int score = -minimax(0, 1);
                 board[i][j] = 0;
                 if (score > bestScore)
                 {
