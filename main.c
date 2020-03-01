@@ -114,11 +114,8 @@ int minimax(depth, isMaximizing)
     {
         if (result != 2) //if not tie
         {
+            //printf("%d\n", result * 10);
             return result * 10;
-        }
-        else
-        {
-            return 0;
         }
 
         //return scores[result];
@@ -137,13 +134,17 @@ int minimax(depth, isMaximizing)
                     board[i][j] = -1;
                     int score = minimax(depth + 1, 0);
                     board[i][j] = 0;
-                    bestScore = MAX(score, bestScore);
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                    }
+                    //bestScore = MAX(score, bestScore);
                 }
             }
         }
         return bestScore;
     }
-    else
+    else if (isMaximizing == 0)
     {
         int bestScore = INT_MAX;
         for (int i = 0; i < 3; i++)
@@ -156,7 +157,11 @@ int minimax(depth, isMaximizing)
                     board[i][j] = 1;
                     int score = minimax(depth + 1, 1);
                     board[i][j] = 0;
-                    bestScore = MIN(score, bestScore);
+                    if (score < bestScore)
+                    {
+                        bestScore = score;
+                    }
+                    //bestScore = MIN(score, bestScore);
                 }
             }
         }
